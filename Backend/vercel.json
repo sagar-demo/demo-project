@@ -1,0 +1,18 @@
+{
+    "version" : 2,
+      "name" : "ergon",
+      "builds" : [
+        {
+          "src" : "./database.js",
+          "use" : "@vercel/node"
+        }
+      ],
+      "routes" : [
+        {
+          "src" : "/(.*)",
+          "dest" : "/"
+        }
+      ]
+    
+    }
+      
