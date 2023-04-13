@@ -7,22 +7,23 @@ app.use(express.json());
 app.use(cors());
 
 // Creating  a connection to the MySQL database
-const connection = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "admin",
-  password: "admin",
-  database: "reference_details",
+const pool=mysql.createPool({
+host:process.env.DB_HOST,
+user:process.env.DB_USERNAME,
+password:process.env.DB_PASSWORD,
+ database:process.env.DB_DBNAME,
+  waitForConnection:true,
+  connectionLimit:10,
+  queueLimit:0
 });
 
 //for Connecting to the MySQL database
-connection.connect((err) => {
-  if (err) {
-    console.error("Error connecting to MySQL database:", err);
-    return;
+pool.getConnection((err,conn)=>{
+  if(err){
+    console.log(err)
   }
-
-  console.log("Connected to MySQL database");
-});
+  console.log("Connnected successfully!");
+})
 
 app.post("/post", (req, res) => {
   const s_no = req.body.s_no;
